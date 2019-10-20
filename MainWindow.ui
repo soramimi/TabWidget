@@ -15,8 +15,29 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item>
-     <widget class="TabWidget" name="widget" native="true"/>
+     <widget class="TabWidget" name="widget" native="true">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>50</height>
+       </size>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2"/>
+     </widget>
+    </item>
+    <item>
+     <widget class="MyFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -26,7 +47,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -37,6 +58,12 @@
    <class>TabWidget</class>
    <extends>QWidget</extends>
    <header>TabWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyFrame</class>
+   <extends>QFrame</extends>
+   <header>MyFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

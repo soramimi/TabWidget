@@ -8,6 +8,7 @@ DESTDIR = $$PWD/_bin
 
 SOURCES += \
         MainWindow.cpp \
+	MyFrame.cpp \
         main.cpp \
     TabWidget.cpp
 
@@ -17,4 +18,5 @@ FORMS += \
 HEADERS += \
 	MainWindow.h \
     HorizontalTabWidget.h \
+	MyFrame.h \
     TabWidget.h

@@ -2,10 +2,22 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QStyle>
 
 TabWidget::TabWidget(QWidget *parent)
 	: QWidget(parent)
 {
+#if 0
+	colors_.color255 = QColor(255, 255, 255);
+	colors_.color240 = QColor(240, 240, 240);
+	colors_.color192 = QColor(192, 192, 192);
+	colors_.color128 = QColor(128, 128, 128);
+#else
+	colors_.color255 = palette().color(QPalette::Base);
+	colors_.color240 = colors_.color255.lighter(90);
+	colors_.color192 = colors_.color255.lighter(75);
+	colors_.color128 = colors_.color255.lighter(50);
+#endif
 }
 
 Qt::Orientation TabWidget::orientation() const
@@ -60,15 +72,15 @@ void TabWidget::paintEvent(QPaintEvent *)
 				t.translate(0, y);
 				pr.setTransform(t);
 			}
-			pr.fillRect(x + 1, 1, z - 2, h, (i == selected_) ? QColor(255, 255, 255) : QColor(240, 240, 240));
-			pr.fillRect(x, 2, 1, h, QColor(128, 128, 128));
-			pr.fillRect(x + 1, 2, 1, h, QColor(255, 255, 255));
-			pr.fillRect(x + 1, 1, 1, 1, QColor(128, 128, 128));
-			pr.fillRect(x + 2, 0, z - 3, 1, QColor(128, 128, 128));
-			pr.fillRect(x + 2, 1, z - 3, 1, QColor(255, 255, 255));
-			pr.fillRect(x + z - 1, 1, 1, 1, QColor(128, 128, 128));
-			pr.fillRect(x + z - 0, 2, 1, h, QColor(128, 128, 128));
-			pr.fillRect(x + z - 1, 2, 1, h, QColor(192, 192, 192));
+			pr.fillRect(x + 1, 1, z - 2, h, (i == selected_) ? colors_.color255 : colors_.color240);
+			pr.fillRect(x, 2, 1, h, colors_.color128);
+			pr.fillRect(x + 1, 2, 1, h, colors_.color255);
+			pr.fillRect(x + 1, 1, 1, 1, colors_.color128);
+			pr.fillRect(x + 2, 0, z - 3, 1, colors_.color128);
+			pr.fillRect(x + 2, 1, z - 3, 1, colors_.color255);
+			pr.fillRect(x + z - 1, 1, 1, 1, colors_.color128);
+			pr.fillRect(x + z - 0, 2, 1, h, colors_.color128);
+			pr.fillRect(x + z - 1, 2, 1, h, colors_.color192);
 			QString s = text(i);
 			pr.drawText(x + (z - pr.fontMetrics().size(0, s).width()) / 2, pr.fontMetrics().height() + 2, s);
 			pr.restore();
@@ -87,15 +99,15 @@ void TabWidget::paintEvent(QPaintEvent *)
 				t.translate(x, 0);
 				pr.setTransform(t);
 			}
-			pr.fillRect(1, y + 1, w, z - 2, (i == selected_) ? QColor(255, 255, 255) : QColor(240, 240, 240));
-			pr.fillRect(2, y, w, 1, QColor(128, 128, 128));
-			pr.fillRect(2, y + 1, w, 1, QColor(255, 255, 255));
-			pr.fillRect(1, y + 1, 1, 1, QColor(128, 128, 128));
-			pr.fillRect(0, y + 2, 1, z - 3, QColor(128, 128, 128));
-			pr.fillRect(1, y + 2, 1, z - 3, QColor(255, 255, 255));
-			pr.fillRect(1, y + z - 1, 1, 1, QColor(128, 128, 128));
-			pr.fillRect(2, y + z - 0, w, 1, QColor(128, 128, 128));
-			pr.fillRect(2, y + z - 1, w, 1, QColor(192, 192, 192));
+			pr.fillRect(1, y + 1, w, z - 2, (i == selected_) ? colors_.color255 : colors_.color240);
+			pr.fillRect(2, y, w, 1, colors_.color128);
+			pr.fillRect(2, y + 1, w, 1, colors_.color255);
+			pr.fillRect(1, y + 1, 1, 1, colors_.color128);
+			pr.fillRect(0, y + 2, 1, z - 3, colors_.color128);
+			pr.fillRect(1, y + 2, 1, z - 3, colors_.color255);
+			pr.fillRect(1, y + z - 1, 1, 1, colors_.color128);
+			pr.fillRect(2, y + z - 0, w, 1, colors_.color128);
+			pr.fillRect(2, y + z - 1, w, 1, colors_.color192);
 			{
 				QTransform t;
 				int tx = pr.fontMetrics().height() + 2;
@@ -149,6 +161,11 @@ QRect TabWidget::bounds(int index) const
 		a = bounds_[index];
 	}
 	return a;
+}
+
+QRect TabWidget::selectedBounds() const
+{
+	return bounds(selectedIndex());
 }
 
 void TabWidget::mousePressEvent(QMouseEvent *event)
